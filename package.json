@@ -1,0 +1,34 @@
+{
+  "name": "backend-project-lvl2",
+  "version": "1.0.0",
+  "description": "second project on Hexlet Platform.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antiyvt/backend-project-lvl2.git"
+  },
+  "keywords": [
+    "hexlet",
+    "backend",
+    "lvl2"
+  ],
+  "author": "Anton Terechov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antiyvt/backend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/antiyvt/backend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^26.0.1",
+    "jest-cli": "^26.0.1"
+  }
+}

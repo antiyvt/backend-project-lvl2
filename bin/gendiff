@@ -7,4 +7,13 @@ const program = new Command();
 program
   .version('0.0.1')
   .description('Compares two configuration files and shows a difference.')
-  .parse(process.argv);
+  .option('-f, --format [type]', 'output format');
+
+program
+  .arguments('<filepath1> <filepath2>')
+  .action((filepath1, filepath2) => {
+    const pathToFirstFile = filepath1;
+    const pathToSecondFile = filepath2;
+});
+
+program.parse(process.argv);

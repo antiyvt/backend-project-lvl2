@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import program from 'commander';
 import getDifference from '../src/index.js';
-import getJSON from '../src/utils.js';
 
 program
   .version('0.0.1')
@@ -11,9 +10,7 @@ program
 program
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
-    const firstJSON = getJSON(filepath1);
-    const secondJSON = getJSON(filepath2);
-    const result = getDifference(firstJSON, secondJSON);
+    const result = getDifference(filepath1, filepath2);
     console.log(result);
     return result;
   });

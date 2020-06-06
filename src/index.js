@@ -1,6 +1,17 @@
 import _ from 'lodash';
+import fs from 'fs';
+import process from 'process';
+import path from 'path';
 
-const getDifference = (before, after) => {
+const getJSON = (fileName) => {
+  const pathToFile = path.resolve(process.cwd(), fileName);
+  const rawdata = fs.readFileSync(pathToFile);
+  return JSON.parse(rawdata);
+};
+
+export default (filepath1, filepath2) => {
+  const before = getJSON(filepath1);
+  const after = getJSON(filepath2);
   const keys = Object.keys({ ...before, ...after });
   const cb = (acc, key) => {
     if (_.has(before, key) && _.has(after, key)) {
@@ -28,5 +39,3 @@ const getDifference = (before, after) => {
   result.push('}');
   return result.join('\n');
 };
-
-export default getDifference;

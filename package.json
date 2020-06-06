@@ -2,13 +2,17 @@
   "name": "backend-project-lvl2",
   "version": "1.0.0",
   "description": "second project on Hexlet Platform.",
-  "main": "bin/gendiff",
+  "main": "src/index.js",
   "bin": {
     "gendiff": "src/index.js"
   },
-  "type": "module",
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx -n --experimental-vm-modules jest --watch",
+    "build": "NODE_ENV=production babel src --out-dir dist",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,15 +28,31 @@
   "bugs": {
     "url": "https://github.com/antiyvt/backend-project-lvl2/issues"
   },
+  "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "homepage": "https://github.com/antiyvt/backend-project-lvl2#readme",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
+    "@jest/globals": "^26.0.1",
     "commander": "^5.1.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^26.0.1",
+    "debug": "^4.1.1",
     "eslint": "^7.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.13.2",
     "jest": "^26.0.1",
     "jest-cli": "^26.0.1"
   }

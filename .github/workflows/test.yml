@@ -11,4 +11,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Run Jest
       run: |
+          npm install locutus --save
+      run: |
           make test

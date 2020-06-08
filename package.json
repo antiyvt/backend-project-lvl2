@@ -4,7 +4,7 @@
   "description": "second project on Hexlet Platform.",
   "main": "src/index.js",
   "bin": {
-    "gendiff": "src/index.js"
+    "gendiff": "bin/gendiff.js"
   },
   "engines": {
     "node": ">=14"

@@ -1,17 +1,9 @@
 import _ from 'lodash';
-import fs from 'fs';
-import process from 'process';
-import path from 'path';
-
-const getJSON = (fileName) => {
-  const pathToFile = path.resolve(process.cwd(), fileName);
-  const rawdata = fs.readFileSync(pathToFile);
-  return JSON.parse(rawdata);
-};
+import parse from './parsers.js';
 
 export default (filepath1, filepath2) => {
-  const before = getJSON(filepath1);
-  const after = getJSON(filepath2);
+  const before = parse(filepath1);
+  const after = parse(filepath2);
   const keys = Object.keys({ ...before, ...after });
   const cb = (acc, key) => {
     if (_.has(before, key) && _.has(after, key)) {

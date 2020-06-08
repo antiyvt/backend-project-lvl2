@@ -10,6 +10,8 @@ let jsonBeforChange;
 let jsonAfterChange;
 let yamlBeforChange;
 let yamlAfterChange;
+let iniBeforChange;
+let iniAfterChange;
 
 beforeAll(() => {
   const __filename = fileURLToPath(import.meta.url);
@@ -22,15 +24,22 @@ beforeAll(() => {
   jsonAfterChange = getFixturePath('after.json');
   yamlBeforChange = getFixturePath('before.yml');
   yamlAfterChange = getFixturePath('after.yml');
-  
+  iniBeforChange = getFixturePath('before.ini');
+  iniAfterChange = getFixturePath('after.ini');
 });
 
 test('Test JSON difference', async () => {
+  
   const differense = getDifference(jsonBeforChange, jsonAfterChange);
   expect(differense).toBe(result);
 });
 
 test('Test YAML difference', async () => {
   const differense = getDifference(yamlBeforChange, yamlAfterChange);
+  expect(differense).toBe(result);
+});
+
+test('Test INI difference', async () => {
+  const differense = getDifference(iniBeforChange, iniAfterChange);
   expect(differense).toBe(result);
 });

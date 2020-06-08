@@ -3,9 +3,15 @@
 ![Node CI](https://github.com/antiyvt/backend-project-lvl2/workflows/Node%20CI/badge.svg)
 
 ## usage example of gendiff
-https://asciinema.org/a/pNLaEqdVzvNkY3EKxR9FGdyAi
+https://asciinema.org/a/U5AmogfTI9XyiaS1Fn1l0IvyR
 
 ```sh
-$ ./gendiff.js -h
-$ ./gendiff.js ../__tests__/before.json ../__tests__/after.json
+$ cd /tmp
+$ git clonen https://github.com/antiyvt/backend-project-lvl2
+$ cd backend-project-lvl2/
+$ sudo npm -g install
+$ cd __fixtures__/
+$ gendiff -h
+$ gendiff before.json after.json
+$ gendiff before.yml after.yml
 ```

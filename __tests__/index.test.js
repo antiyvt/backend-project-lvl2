@@ -29,7 +29,6 @@ beforeAll(() => {
 });
 
 test('Test JSON difference', async () => {
-  
   const differense = getDifference(jsonBeforChange, jsonAfterChange);
   expect(differense).toBe(result);
 });

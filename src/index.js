@@ -1,33 +1,12 @@
-import _ from 'lodash';
+import buildAST from './buildAST.js';
 import parse from './parsers.js';
+import render from './formatters.js';
 
-export default (filepath1, filepath2) => {
+const getDifference = (filepath1, filepath2, format = 'stylish') => {
   const before = parse(filepath1);
   const after = parse(filepath2);
-  const keys = Object.keys({ ...before, ...after });
-  const cb = (acc, key) => {
-    if (_.has(before, key) && _.has(after, key)) {
-      if (before[key] === after[key]) {
-        acc.push(`  ${key}: ${before[key]}`);
-        return acc;
-      }
-      acc.push(`- ${key}: ${before[key]}`);
-      acc.push(`+ ${key}: ${after[key]}`);
-      return acc;
-    }
-    if (!_.has(before, key)) {
-      acc.push(`+ ${key}: ${after[key]}`);
-      return acc;
-    }
-    if (!_.has(after, key)) {
-      acc.push(`- ${key}: ${before[key]}`);
-      return acc;
-    }
-    return acc;
-  };
-
-  const result = keys.reduce(cb, []);
-  result.unshift('{');
-  result.push('}');
-  return result.join('\n');
+  const difference = buildAST(before, after);
+  return render(difference, format);
 };
+
+export default getDifference;

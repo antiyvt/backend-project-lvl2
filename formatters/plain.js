@@ -1,8 +1,6 @@
 import _ from 'lodash';
 
-const convertValue = (value) => {
-  return (_.isObject(value)) ? '[complex value]' : value;
-};
+const convertValue = (value) => ((_.isObject(value)) ? '[complex value]' : value);
 
 const pathToProperty = (path, key) => {
   if (path === '') {
@@ -25,20 +23,20 @@ const plain = (difference) => {
       newValue,
     } = item;
 
-    path = pathToProperty(path, key);
+    const pathToKey = pathToProperty(path, key);
     // console.log('key is ', key);
     // console.log('path is ', path);
     if (type === 'nested') {
-      return children.flatMap((item) => iter(item, path)).join('\n');
+      return children.flatMap((child) => iter(child, pathToKey)).join('\n');
     }
     if (type === 'added') {
-      return `Property \'${path}\' was added with value: ${convertValue(value)}`;
+      return `Property '${pathToKey}' was added with value: ${convertValue(value)}`;
     }
     if (type === 'removed') {
-      return `Property \'${path}\' was deleted`;
+      return `Property '${pathToKey}' was deleted`;
     }
     if (type === 'changed') {
-      return `Property \'${path}\' was changed from ${convertValue(oldValue)} to ${convertValue(newValue)}`;
+      return `Property '${pathToKey}' was changed from ${convertValue(oldValue)} to ${convertValue(newValue)}`;
     }
     return [];
   };

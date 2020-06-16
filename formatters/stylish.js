@@ -79,12 +79,4 @@ const stylish = (difference) => {
   return result.join('\n');
 };
 
-
-const render = (difference, style) => {
-  if (style === 'stylish') {
-    return stylish(difference);
-  }
-  return true;
-};
-
-export default render;
+export default stylish;

@@ -1,6 +1,6 @@
 import buildAST from './buildAST.js';
 import parse from './parsers.js';
-import render from './formatters.js';
+import render from '../formatters/index.js';
 
 const getDifference = (filepath1, filepath2, format = 'stylish') => {
   const before = parse(filepath1);

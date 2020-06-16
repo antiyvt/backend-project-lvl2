@@ -12,7 +12,6 @@ const pathToProperty = (path, key) => {
 };
 
 const plain = (difference) => {
-  // let acc = [];
   const iter = (item, path) => {
     const {
       key,
@@ -24,8 +23,6 @@ const plain = (difference) => {
     } = item;
 
     const pathToKey = pathToProperty(path, key);
-    // console.log('key is ', key);
-    // console.log('path is ', path);
     if (type === 'nested') {
       return children.flatMap((child) => iter(child, pathToKey)).join('\n');
     }

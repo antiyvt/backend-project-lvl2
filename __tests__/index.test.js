@@ -16,6 +16,7 @@ let iniAfterChange;
 let recJSONbefore;
 let recJSONafter;
 let plainResult;
+let jsonResult;
 
 beforeAll(() => {
   const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +27,7 @@ beforeAll(() => {
   result = readFile('result.txt');
   recResult = readFile('recResult.txt');
   plainResult = readFile('plainResult.txt');
+  jsonResult = readFile('jsonResult.txt');
   jsonBeforChange = getFixturePath('before.json');
   jsonAfterChange = getFixturePath('after.json');
   yamlBeforChange = getFixturePath('before.yml');
@@ -34,7 +36,6 @@ beforeAll(() => {
   iniAfterChange = getFixturePath('after.ini');
   recJSONbefore = getFixturePath('recBefore.json');
   recJSONafter = getFixturePath('recAfter.json');
-
 });
 
 test('Test JSON difference', async () => {
@@ -60,4 +61,10 @@ test('Recursive comparison', async () => {
 test('Plain comparison', async () => {
   const differense = getDifference(recJSONbefore, recJSONafter, 'plain');
   expect(differense).toBe(plainResult);
+});
+
+test('JSON comparison', async () => {
+  const differense = getDifference(recJSONbefore, recJSONafter, 'json');
+  console.log('!!!!!!!!!!!!!!!!!!!!!!', jsonResult);
+  expect(differense).toBe(jsonResult);
 });

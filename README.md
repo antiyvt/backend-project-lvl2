@@ -5,16 +5,27 @@
 ## Description
 This package compares two configuration files and shows a difference.
 
-## usage example of gendiff
-https://asciinema.org/a/U5AmogfTI9XyiaS1Fn1l0IvyR
-
+## Installation:
 ```sh
 $ cd /tmp
-$ git clonen https://github.com/antiyvt/backend-project-lvl2
+$ git clone https://github.com/antiyvt/backend-project-lvl2
 $ cd backend-project-lvl2/
 $ sudo npm -g install
-$ cd __fixtures__/
-$ gendiff -h
-$ gendiff before.json after.json
-$ gendiff before.yml after.yml
 ```
+
+## usage example of gendiff
+```sh
+Usage: gendiff [options] <filepath1> <filepath2>
+
+Compares two configuration files and shows a difference.
+
+Options:
+  -V, --version        output the version number
+  -f, --format [type]  output format (default: "stylish")
+  -h, --help           display help for command
+```
+
+
+
+
+Usage examples: [asciinema](https://asciinema.org/a/nJIcrYyYwnsRHWvekOuumvJbm)

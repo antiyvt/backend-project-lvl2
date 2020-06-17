@@ -65,6 +65,5 @@ test('Plain comparison', async () => {
 
 test('JSON comparison', async () => {
   const differense = getDifference(recJSONbefore, recJSONafter, 'json');
-  console.log('!!!!!!!!!!!!!!!!!!!!!!', jsonResult);
   expect(differense).toBe(jsonResult);
 });

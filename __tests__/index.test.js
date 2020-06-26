@@ -5,65 +5,49 @@ import getDifference from '../src/index.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-let result;
-let recResult;
-let jsonBeforChange;
-let jsonAfterChange;
-let yamlBeforChange;
-let yamlAfterChange;
-let iniBeforChange;
-let iniAfterChange;
-let recJSONbefore;
-let recJSONafter;
-let plainResult;
-let jsonResult;
-
-beforeAll(() => {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-  const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
-
-  result = readFile('result.txt');
-  recResult = readFile('recResult.txt');
-  plainResult = readFile('plainResult.txt');
-  jsonResult = readFile('jsonResult.txt');
-  jsonBeforChange = getFixturePath('before.json');
-  jsonAfterChange = getFixturePath('after.json');
-  yamlBeforChange = getFixturePath('before.yml');
-  yamlAfterChange = getFixturePath('after.yml');
-  iniBeforChange = getFixturePath('before.ini');
-  iniAfterChange = getFixturePath('after.ini');
-  recJSONbefore = getFixturePath('recBefore.json');
-  recJSONafter = getFixturePath('recAfter.json');
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
+const result = readFile('result.txt');
+const recResult = readFile('recResult.txt');
+const plainResult = readFile('plainResult.txt');
+const jsonResult = readFile('jsonResult.txt');
+const jsonBeforeChange = getFixturePath('before.json');
+const jsonAfterChange = getFixturePath('after.json');
+const yamlBeforeChange = getFixturePath('before.yml');
+const yamlAfterChange = getFixturePath('after.yml');
+const iniBeforeChange = getFixturePath('before.ini');
+const iniAfterChange = getFixturePath('after.ini');
+const recJSONbefore = getFixturePath('recBefore.json');
+const recJSONafter = getFixturePath('recAfter.json');
 
 test('Test JSON difference', async () => {
-  const differense = getDifference(jsonBeforChange, jsonAfterChange);
-  expect(differense).toBe(result);
+  const difference = getDifference(jsonBeforeChange, jsonAfterChange);
+  expect(difference).toBe(result);
 });
 
 test('Test YAML difference', async () => {
-  const differense = getDifference(yamlBeforChange, yamlAfterChange);
-  expect(differense).toBe(result);
+  const difference = getDifference(yamlBeforeChange, yamlAfterChange);
+  expect(difference).toBe(result);
 });
 
 test('Test INI difference', async () => {
-  const differense = getDifference(iniBeforChange, iniAfterChange);
-  expect(differense).toBe(result);
+  const difference = getDifference(iniBeforeChange, iniAfterChange);
+  expect(difference).toBe(result);
 });
 
 test('Recursive comparison', async () => {
-  const differense = getDifference(recJSONbefore, recJSONafter, 'stylish');
-  expect(differense).toBe(recResult);
+  const difference = getDifference(recJSONbefore, recJSONafter, 'stylish');
+  expect(difference).toBe(recResult);
 });
 
 test('Plain comparison', async () => {
-  const differense = getDifference(recJSONbefore, recJSONafter, 'plain');
-  expect(differense).toBe(plainResult);
+  const difference = getDifference(recJSONbefore, recJSONafter, 'plain');
+  expect(difference).toBe(plainResult);
 });
 
 test('JSON comparison', async () => {
-  const differense = getDifference(recJSONbefore, recJSONafter, 'json');
-  expect(differense).toBe(jsonResult);
+  const difference = getDifference(recJSONbefore, recJSONafter, 'json');
+  expect(difference).toBe(jsonResult);
 });

@@ -11,8 +11,8 @@ const pathToProperty = (path, key) => {
   return tmp.join('.');
 };
 
-const plain = (difference) => {
-  const iter = (item, path) => {
+const plain = (ast) => {
+  const iter = (astLeaf, path) => {
     const {
       key,
       type,
@@ -20,7 +20,7 @@ const plain = (difference) => {
       value,
       oldValue,
       newValue,
-    } = item;
+    } = astLeaf;
 
     const pathToKey = pathToProperty(path, key);
     if (type === 'nested') {
@@ -38,7 +38,7 @@ const plain = (difference) => {
     return [];
   };
 
-  return difference.flatMap((item) => iter(item, '')).join('\n');
+  return ast.flatMap((astLeaf) => iter(astLeaf, '')).join('\n');
 };
 
 export default plain;

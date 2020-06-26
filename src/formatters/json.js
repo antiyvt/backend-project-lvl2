@@ -1,4 +1,4 @@
-const json = (difference) => {
+const json = (ast) => {
   const iter = (item) => {
     const { type, children } = item;
     if (type === 'nested') {
@@ -6,7 +6,7 @@ const json = (difference) => {
     }
     return JSON.stringify(item);
   };
-  const result = difference.flatMap(iter);
+  const result = ast.flatMap(iter);
   return `[${result.join(',')}]`;
 };
 

@@ -37,9 +37,9 @@ const alphabetizeDifference = (items) => {
   return sortedItems;
 };
 
-const stylish = (difference) => {
+const stylish = (ast) => {
   const iter = (acc, item, depth) => {
-    item.forEach((diffItem) => {
+    item.forEach((astLeaf) => {
       const {
         key,
         type,
@@ -47,7 +47,7 @@ const stylish = (difference) => {
         value,
         oldValue,
         newValue,
-      } = diffItem;
+      } = astLeaf;
       const indentKey = makeIndent(depth);
       const convertedValue = convertValue(value, indentKey);
 
@@ -73,7 +73,7 @@ const stylish = (difference) => {
     return acc;
   };
 
-  const result = iter([], alphabetizeDifference(difference), 0);
+  const result = iter([], alphabetizeDifference(ast), 0);
   result.unshift('{');
   result.push('}');
   return result.join('\n');

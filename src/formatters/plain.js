@@ -6,39 +6,18 @@ const pathToProperty = (path, key) => {
   if (path === '') {
     return key;
   }
-  const tmp = path.split('.');
-  tmp.push(key);
-  return tmp.join('.');
+  return path.concat('.', key);
 };
 
 const plain = (ast) => {
-  const iter = (astLeaf, path) => {
-    const {
-      key,
-      type,
-      children,
-      value,
-      oldValue,
-      newValue,
-    } = astLeaf;
-
-    const pathToKey = pathToProperty(path, key);
-    if (type === 'nested') {
-      return children.flatMap((child) => iter(child, pathToKey)).join('\n');
-    }
-    if (type === 'added') {
-      return `Property '${pathToKey}' was added with value: ${convertValue(value)}`;
-    }
-    if (type === 'removed') {
-      return `Property '${pathToKey}' was deleted`;
-    }
-    if (type === 'changed') {
-      return `Property '${pathToKey}' was changed from ${convertValue(oldValue)} to ${convertValue(newValue)}`;
-    }
-    return [];
+  const render = {
+    nested: (item, path) => item.children.flatMap((child) => render[child.type](child, pathToProperty(path, item.key))).join('\n'),
+    added: (item, path) => `Property '${pathToProperty(path, item.key)}' was added with value: ${convertValue(item.value)}`,
+    removed: (item, path) => `Property '${pathToProperty(path, item.key)}' was deleted`,
+    changed: (item, path) => `Property '${pathToProperty(path, item.key)}' was changed from ${convertValue(item.oldValue)} to ${convertValue(item.newValue)}`,
+    unchanged: () => [],
   };
-
-  return ast.flatMap((astLeaf) => iter(astLeaf, '')).join('\n');
+  return ast.flatMap((node) => render[node.type](node, '')).join('\n');
 };
 
 export default plain;

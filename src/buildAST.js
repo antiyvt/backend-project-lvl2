@@ -1,31 +1,32 @@
 import _ from 'lodash';
 
-const bothAreObjects = (item1, item2) => _.isObject(item1) && _.isObject(item2);
-
-const buildLeaf = (config1, config2, key, fn) => {
-  if (!_.has(config1, key)) {
-    return { key, type: 'added', value: config2[key] };
-  }
-  if (!_.has(config2, key)) {
-    return { key, type: 'removed', value: config1[key] };
-  }
-  if (bothAreObjects(config1[key], config2[key])) {
-    return { key, type: 'nested', children: fn(config1[key], config2[key]) };
-  }
-  if (config1[key] === config2[key]) {
-    return { key, type: 'unchanged', value: config1[key] };
-  }
-  return {
-    key,
-    type: 'changed',
-    oldValue: config1[key],
-    newValue: config2[key],
-  };
-};
+const areBothItemsObjects = (item1, item2) => _.isObject(item1) && _.isObject(item2);
+const areBothItemsEqual = (item1, item2) => item1 === item2;
+const hasNoKey = (config, key) => !_.has(config, key);
 
 const buildAST = (config1, config2) => {
+  const buildNode = (item1, item2, key) => {
+    if (hasNoKey(item1, key)) {
+      return { key, type: 'added', value: item2[key] };
+    }
+    if (hasNoKey(item2, key)) {
+      return { key, type: 'removed', value: item1[key] };
+    }
+    if (areBothItemsObjects(item1[key], item2[key])) {
+      return { key, type: 'nested', children: buildAST(item1[key], item2[key]) };
+    }
+    if (areBothItemsEqual(item1[key], item2[key])) {
+      return { key, type: 'unchanged', value: item1[key] };
+    }
+    return {
+      key,
+      type: 'changed',
+      oldValue: item1[key],
+      newValue: item2[key],
+    };
+  };
   const keys = Object.keys({ ...config1, ...config2 });
-  return keys.flatMap((key) => buildLeaf(config1, config2, key, buildAST));
+  return keys.flatMap((key) => buildNode(config1, config2, key));
 };
 
 export default buildAST;

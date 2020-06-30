@@ -1,28 +1,28 @@
 import _ from 'lodash';
 
-const areBothItemsObjects = (item1, item2) => _.isObject(item1) && _.isObject(item2);
-const areBothItemsEqual = (item1, item2) => item1 === item2;
+const BothValuesAreObjects = (value1, value2) => _.isObject(value1) && _.isObject(value2);
+const BothValuesAreEqual = (value1, value2) => value1 === value2;
 const hasNoKey = (config, key) => !_.has(config, key);
 
 const buildAST = (config1, config2) => {
-  const buildNode = (item1, item2, key) => {
-    if (hasNoKey(item1, key)) {
-      return { key, type: 'added', value: item2[key] };
+  const buildNode = (setting1, setting2, key) => {
+    if (hasNoKey(setting1, key)) {
+      return { key, type: 'added', value: setting2[key] };
     }
-    if (hasNoKey(item2, key)) {
-      return { key, type: 'removed', value: item1[key] };
+    if (hasNoKey(setting2, key)) {
+      return { key, type: 'removed', value: setting1[key] };
     }
-    if (areBothItemsObjects(item1[key], item2[key])) {
-      return { key, type: 'nested', children: buildAST(item1[key], item2[key]) };
+    if (BothValuesAreObjects(setting1[key], setting2[key])) {
+      return { key, type: 'nested', children: buildAST(setting1[key], setting2[key]) };
     }
-    if (areBothItemsEqual(item1[key], item2[key])) {
-      return { key, type: 'unchanged', value: item1[key] };
+    if (BothValuesAreEqual(setting1[key], setting2[key])) {
+      return { key, type: 'unchanged', value: setting1[key] };
     }
     return {
       key,
       type: 'changed',
-      oldValue: item1[key],
-      newValue: item2[key],
+      oldValue: setting1[key],
+      newValue: setting2[key],
     };
   };
   const keys = Object.keys({ ...config1, ...config2 });

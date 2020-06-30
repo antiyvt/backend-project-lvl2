@@ -28,13 +28,13 @@ const makeLine = (key, marker, value, depth) => `${makeIndent(depth)}${marker}${
 
 const stylish = (ast, depth = 0) => {
   const render = {
-    nested: (item, level) => makeLine(item.key, '', stylish(item.children, level + 2), level + 2),
-    added: (item, level) => makeLine(item.key, '+ ', convertValue(item.value, level + 1), level + 1),
-    removed: (item, level) => makeLine(item.key, '- ', convertValue(item.value, level + 1), level + 1),
-    unchanged: (item, level) => makeLine(item.key, '  ', convertValue(item.value, level + 1), level + 1),
-    changed: (item, level) => {
-      const renderedRemovedValue = makeLine(item.key, '- ', convertValue(item.oldValue, level + 1), level + 1);
-      const renderedAddedValue = makeLine(item.key, '+ ', convertValue(item.newValue, level + 1), level + 1);
+    nested: (item) => makeLine(item.key, '', stylish(item.children, depth + 2), depth + 2),
+    added: (item) => makeLine(item.key, '+ ', convertValue(item.value, depth + 1), depth + 1),
+    removed: (item) => makeLine(item.key, '- ', convertValue(item.value, depth + 1), depth + 1),
+    unchanged: (item) => makeLine(item.key, '  ', convertValue(item.value, depth + 1), depth + 1),
+    changed: (item) => {
+      const renderedRemovedValue = makeLine(item.key, '- ', convertValue(item.oldValue, depth + 1), depth + 1);
+      const renderedAddedValue = makeLine(item.key, '+ ', convertValue(item.newValue, depth + 1), depth + 1);
       return `${renderedRemovedValue}\n${renderedAddedValue}`;
     },
   };

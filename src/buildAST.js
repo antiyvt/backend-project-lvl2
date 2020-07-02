@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-const BothValuesAreObjects = (value1, value2) => _.isObject(value1) && _.isObject(value2);
-const BothValuesAreEqual = (value1, value2) => value1 === value2;
+const bothValuesAreObjects = (value1, value2) => _.isObject(value1) && _.isObject(value2);
+const bothValuesAreEqual = (value1, value2) => value1 === value2;
 const hasNoKey = (config, key) => !_.has(config, key);
 
 const buildAST = (config1, config2) => {
@@ -12,10 +12,10 @@ const buildAST = (config1, config2) => {
     if (hasNoKey(setting2, key)) {
       return { key, type: 'removed', value: setting1[key] };
     }
-    if (BothValuesAreObjects(setting1[key], setting2[key])) {
+    if (bothValuesAreObjects(setting1[key], setting2[key])) {
       return { key, type: 'nested', children: buildAST(setting1[key], setting2[key]) };
     }
-    if (BothValuesAreEqual(setting1[key], setting2[key])) {
+    if (bothValuesAreEqual(setting1[key], setting2[key])) {
       return { key, type: 'unchanged', value: setting1[key] };
     }
     return {

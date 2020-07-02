@@ -11,10 +11,10 @@ const pathToProperty = (path, key) => {
 
 const plain = (ast) => {
   const render = {
-    nested: (item, path) => item.children.flatMap((child) => render[child.type](child, pathToProperty(path, item.key))).join('\n'),
-    added: (item, path) => `Property '${pathToProperty(path, item.key)}' was added with value: ${convertValue(item.value)}`,
-    removed: (item, path) => `Property '${pathToProperty(path, item.key)}' was deleted`,
-    changed: (item, path) => `Property '${pathToProperty(path, item.key)}' was changed from ${convertValue(item.oldValue)} to ${convertValue(item.newValue)}`,
+    nested: (node, path) => node.children.flatMap((child) => render[child.type](child, pathToProperty(path, node.key))).join('\n'),
+    added: (node, path) => `Property '${pathToProperty(path, node.key)}' was added with value: ${convertValue(node.value)}`,
+    removed: (node, path) => `Property '${pathToProperty(path, node.key)}' was deleted`,
+    changed: (node, path) => `Property '${pathToProperty(path, node.key)}' was changed from ${convertValue(node.oldValue)} to ${convertValue(node.newValue)}`,
     unchanged: () => [],
   };
   return ast.flatMap((node) => render[node.type](node, '')).join('\n');

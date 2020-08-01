@@ -12,7 +12,6 @@ program
   .action((filepath1, filepath2) => {
     const result = getDifference(filepath1, filepath2, program.format);
     console.log(result);
-    return result;
   });
 
 program.parse(process.argv);

@@ -9,15 +9,15 @@ const pathToProperty = (path, key) => {
   return path.concat('.', key);
 };
 
-const plain = (ast) => {
+const plain = (ast, path = '') => {
   const render = {
-    nested: (node, path) => node.children.flatMap((child) => render[child.type](child, pathToProperty(path, node.key))).join('\n'),
-    added: (node, path) => `Property '${pathToProperty(path, node.key)}' was added with value: ${convertValue(node.value)}`,
-    removed: (node, path) => `Property '${pathToProperty(path, node.key)}' was deleted`,
-    changed: (node, path) => `Property '${pathToProperty(path, node.key)}' was changed from ${convertValue(node.oldValue)} to ${convertValue(node.newValue)}`,
+    nested: (node) => plain(node.children, pathToProperty(path, node.key)),
+    added: (node) => `Property '${pathToProperty(path, node.key)}' was added with value: ${convertValue(node.value)}`,
+    removed: (node) => `Property '${pathToProperty(path, node.key)}' was deleted`,
+    changed: (node) => `Property '${pathToProperty(path, node.key)}' was changed from ${convertValue(node.oldValue)} to ${convertValue(node.newValue)}`,
     unchanged: () => [],
   };
-  return ast.flatMap((node) => render[node.type](node, '')).join('\n');
+  return ast.flatMap((node) => render[node.type](node, path)).join('\n');
 };
 
 export default plain;

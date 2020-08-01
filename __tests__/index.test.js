@@ -4,50 +4,38 @@ import path from 'path';
 import getDifference from '../src/index.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { config } from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
-const result = readFile('result.txt');
-const recResult = readFile('recResult.txt');
-const plainResult = readFile('plainResult.txt');
-const jsonResult = readFile('jsonResult.txt');
-const jsonBeforeChange = getFixturePath('before.json');
-const jsonAfterChange = getFixturePath('after.json');
-const yamlBeforeChange = getFixturePath('before.yml');
-const yamlAfterChange = getFixturePath('after.yml');
-const iniBeforeChange = getFixturePath('before.ini');
-const iniAfterChange = getFixturePath('after.ini');
-const recJSONbefore = getFixturePath('recBefore.json');
-const recJSONafter = getFixturePath('recAfter.json');
+const result = (format) => readFile(`result.${format}`);
+const config1 = (extension) => getFixturePath(`before.${extension}`);
+const config2 = (extension) => getFixturePath(`after.${extension}`);
 
-test('Test JSON difference', async () => {
-  const difference = getDifference(jsonBeforeChange, jsonAfterChange);
-  expect(difference).toBe(result);
-});
 
 test('Test YAML difference', async () => {
-  const difference = getDifference(yamlBeforeChange, yamlAfterChange);
-  expect(difference).toBe(result);
+  const difference = getDifference(config1('yml'), config2('yml'));
+  expect(difference).toBe(result('txt'));
 });
 
 test('Test INI difference', async () => {
-  const difference = getDifference(iniBeforeChange, iniAfterChange);
-  expect(difference).toBe(result);
+  const difference = getDifference(config1('ini'), config2('ini'));
+  expect(difference).toBe(result('txt'));
 });
 
 test('Recursive comparison', async () => {
-  const difference = getDifference(recJSONbefore, recJSONafter, 'stylish');
-  expect(difference).toBe(recResult);
+  const difference = getDifference(config1('json'), config2('json'), 'stylish');
+  expect(difference).toBe(result('stylish'));
 });
 
 test('Plain comparison', async () => {
-  const difference = getDifference(recJSONbefore, recJSONafter, 'plain');
-  expect(difference).toBe(plainResult);
+  const difference = getDifference(config1('json'), config2('json'), 'plain');
+  expect(difference).toBe(result('plain'));
 });
 
 test('JSON comparison', async () => {
-  const difference = getDifference(recJSONbefore, recJSONafter, 'json');
-  expect(difference).toBe(jsonResult);
+  const difference = getDifference(config1('json'), config2('json'), 'json');
+  expect(difference).toBe(result('json'));
 });

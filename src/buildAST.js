@@ -25,7 +25,7 @@ const buildAST = (config1, config2) => {
       newValue: setting2[key],
     };
   };
-  const keys = Object.keys({ ...config1, ...config2 });
+  const keys = _.sortBy(Object.keys({ ...config1, ...config2 }));
   return keys.flatMap((key) => buildNode(config1, config2, key));
 };
 

@@ -10,7 +10,7 @@ const makeLine = (key, marker, value, depth) => `${makeIndent(depth)}${marker}${
 const convertObjectToString = (obj, depth) => {
   const keys = Object.keys(obj);
   const renderObject = {
-    true: (key, marker, value) => makeLine(key, marker, convertObjectToString(value, depth + 1), depth),
+    true: (key, marker, value) => makeLine(key, marker, convertObjectToString(value, depth + 1)),
     false: (key, marker, value) => makeLine(key, marker, value, depth),
   };
 

@@ -9,13 +9,13 @@ const makeLine = (key, marker, value, depth) => `${makeIndent(depth)}${marker}${
 
 const convertObjectToString = (obj, depth) => {
   const keys = Object.keys(obj);
-  const eachValueToString = keys.map((key) => {
+  const stringifiedValues = keys.map((key) => {
     if (_.isObject(obj[key]) && !_.isArray(obj[key])) {
       return makeLine(key, '    ', convertObjectToString(obj[key], depth + 1), depth);
     }
     return makeLine(key, '    ', obj[key], depth);
   });
-  const convertedToString = eachValueToString.join('\n');
+  const convertedToString = stringifiedValues.join('\n');
   return `{\n${convertedToString}\n${makeIndent(depth)}}`;
 };
 

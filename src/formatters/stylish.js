@@ -9,12 +9,12 @@ const makeLine = (key, marker, value, depth) => `${makeIndent(depth)}${marker}${
 
 const convertObjectToString = (obj, depth) => {
   const keys = Object.keys(obj);
-  const stringifiedValues = keys.map((key) => {
-    if (_.isObject(obj[key]) && !_.isArray(obj[key])) {
-      return makeLine(key, '    ', convertObjectToString(obj[key], depth + 1), depth);
-    }
-    return makeLine(key, '    ', obj[key], depth);
-  });
+  const renderObject = {
+    true: (key, marker, value) => makeLine(key, marker, convertObjectToString(value, depth + 1), depth),
+    false: (key, marker, value) => makeLine(key, marker, value, depth),
+  };
+
+  const stringifiedValues = keys.map((key) => renderObject[_.isObject(obj[key])](key, '    ', obj[key], depth));
   const convertedToString = stringifiedValues.join('\n');
   return `{\n${convertedToString}\n${makeIndent(depth)}}`;
 };
